@@ -24,7 +24,7 @@ int main() {
       add_transaction(JSON_FILE);
       break;
     case 2:
-      // list_transactions(JSON_FILE);
+      list_transactions(JSON_FILE);
       break;
     case 3:
       printf("\033[1;31mExiting...\033[0m\n");

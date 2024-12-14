@@ -92,3 +92,48 @@ void add_transaction(const char *filename) {
 
   json_object_put(root);
 }
+
+void list_transactions(const char *filename) {
+  FILE *file = fopen(filename, "r");
+  if (!file) {
+    printf("\033[1;31mNo transactions found.\033[0m\n");
+    return;
+  }
+
+  char *buffer = NULL;
+  size_t length;
+
+  fseek(file, 0, SEEK_END);
+  length = ftell(file);
+  fseek(file, 0, SEEK_SET);
+
+  buffer = malloc(length);
+  fread(buffer, 1, length, file);
+  fclose(file);
+
+  struct json_object *root = json_tokener_parse(buffer);
+  free(buffer);
+
+  if (!json_object_is_type(root, json_type_array)) {
+    printf("\033[1;31mInvalid file format.\033[0m\n");
+    json_object_put(root);
+    return;
+  }
+
+  printf("\033[1;34m\nTransactions:\033[0m\n");
+  for (size_t i = 0; i < json_object_array_length(root); i++) {
+    struct json_object *transaction = json_object_array_get_idx(root, i);
+    const char *name =
+        json_object_get_string(json_object_object_get(transaction, "name"));
+    double amount =
+        json_object_get_double(json_object_object_get(transaction, "amount"));
+    const char *date =
+        json_object_get_string(json_object_object_get(transaction, "date"));
+    const char *category =
+        json_object_get_string(json_object_object_get(transaction, "category"));
+
+    printf("%zu. %s | %s | %.2f | %s\n", i + 1, date, name, amount, category);
+  }
+
+  json_object_put(root);
+}
