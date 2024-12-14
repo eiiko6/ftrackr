@@ -13,16 +13,15 @@ void show_main_menu() {
 
 int main() {
   init_json_file(JSON_FILE);
-  show_main_menu();
-
   while (1) {
+    show_main_menu();
     printf("Choose an option: ");
 
     int choice = get_choice();
 
     switch (choice) {
     case 1:
-      // add_transaction(JSON_FILE);
+      add_transaction(JSON_FILE);
       break;
     case 2:
       // list_transactions(JSON_FILE);
