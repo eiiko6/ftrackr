@@ -12,7 +12,7 @@ void show_main_menu() {
 }
 
 int main() {
-  init_json_file(JSON_FILE);
+  initialize_balance(JSON_FILE);
   while (1) {
     show_main_menu();
     printf("Choose an option: ");
