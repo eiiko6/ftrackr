@@ -35,14 +35,6 @@ void initialize_data(const char *filename, struct json_object **data) {
     json_object_object_add(*data, "balance", json_object_new_double(0.0));
     json_object_object_add(*data, "transactions", json_object_new_array());
   }
-
-  // Print the loaded or initialized balance
-  struct json_object *balance_obj;
-  double balance = 0.0;
-  if (json_object_object_get_ex(*data, "balance", &balance_obj)) {
-    balance = json_object_get_double(balance_obj);
-  }
-  printf("\033[1;34mLoaded Balance: %.2f\033[0m\n", balance);
 }
 
 // Save transactions back to the file
@@ -130,7 +122,6 @@ void list_transactions(struct json_object *data) {
   struct json_object *transactions;
   if (json_object_object_get_ex(data, "transactions", &transactions) &&
       json_object_is_type(transactions, json_type_array)) {
-    printf("\033[1;34m\nTransactions:\033[0m\n");
     for (size_t i = 0; i < json_object_array_length(transactions); i++) {
       struct json_object *transaction =
           json_object_array_get_idx(transactions, i);
@@ -191,4 +182,14 @@ void delete_transaction(struct json_object *data) {
   } else {
     printf("\033[1;31mNo transactions available to delete.\033[0m\n");
   }
+}
+
+// Print the balance
+void print_balance(struct json_object *data) {
+  struct json_object *balance_obj;
+  double balance = 0.0;
+  if (json_object_object_get_ex(data, "balance", &balance_obj)) {
+    balance = json_object_get_double(balance_obj);
+  }
+  printf("\033[1;34mBalance: %.2f\033[0m\n", balance);
 }
