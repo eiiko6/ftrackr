@@ -10,7 +10,7 @@ SRC_DIR = src
 OBJ_DIR = build/objects
 BUILD_DIR = build
 RESOURCES_DIR = resources
-#INSTALL_DIR = /usr/local/bin
+INSTALL_DIR = /usr/local/bin
 
 # Source and object files
 SRCS = $(wildcard $(SRC_DIR)/*.c)
@@ -43,15 +43,14 @@ dist-clean: clean
 	rm -f $(RESOURCES_DIR)/*
 
 # Install the application
-#install: $(TARGET)
-#	install -D $(TARGET) $(DESTDIR)$(INSTALL_DIR)/ftrackr
-#	@echo "Installed to $(DESTDIR)$(INSTALL_DIR)/ftrackr"
+install: $(TARGET)
+	install -m 755 $(TARGET) $(DESTDIR)$(INSTALL_DIR)/ftrackr
+	@echo "Installed to $(DESTDIR)$(INSTALL_DIR)/ftrackr"
 
 # Uninstall the application
-#uninstall:
-#	rm -f $(DESTDIR)$(INSTALL_DIR)/ftrackr
-#	@echo "Uninstalled from $(DESTDIR)$(INSTALL_DIR)/ftrackr"
+uninstall:
+	rm -f $(DESTDIR)$(INSTALL_DIR)/ftrackr
+	@echo "Uninstalled from $(DESTDIR)$(INSTALL_DIR)/ftrackr"
 
 # PHONY targets
 .PHONY: all clean dist-clean setup #install uninstall
-
