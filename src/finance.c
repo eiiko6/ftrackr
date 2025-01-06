@@ -60,7 +60,7 @@ void save_data(const char *filename, struct json_object *data) {
 
 // Add a transaction to the data
 void add_transaction(struct json_object *data) {
-  char name[100], category[50], date[11];
+  char name[50], category[35], date[11];
   double amount;
 
   printf("Enter transaction name: ");
@@ -143,7 +143,8 @@ void list_transactions(struct json_object *data) {
       const char *category = json_object_get_string(
           json_object_object_get(transaction, "category"));
 
-      printf("%zu. %s | %s | %.2f | %s\n", i + 1, date, name, amount, category);
+      printf("%-3zu %-10s | %-10.2f | %-50s | %-35s\n", i + 1, date, amount,
+             name, category);
     }
   } else {
     printf("\033[1;31mNo transactions available.\033[0m\n");
